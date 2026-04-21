@@ -8,7 +8,6 @@ in
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     (modulesPath + "/profiles/qemu-guest.nix")
-    inputs.sops-nix.nixosModules.sops
     ./services/vaultwarden/vaultwarden.nix
   ];
 
@@ -34,7 +33,7 @@ in
   # --- BACKBLAZE B2 RESTIC BACKUP ---
   services.restic.backups.s3-main = {
     # Replace <region> with your actual B2 region (e.g., us-west-004)
-    repository = "s3:s3.<region>.backblazeb2.com/cyclostyle-docker";
+    repository = "s3:s3.eu-central-003.backblazeb2.com/cyclostyle-docker";
 
     # Sops injects the unencrypted strings directly into the service at runtime
     environmentFile = config.sops.secrets."restic/env".path;
