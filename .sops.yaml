@@ -1,0 +1,7 @@
+keys:
+    - &astrolabe_server " age173rv8hnu7sa66u8583hyp0pjuwzjxsfepr4cmtxzeklazpq5la9szp35hk"
+creation_rules:
+    - path_regex: secrets/[^/]+\.yaml$
+      key_groups:
+          - age:
+                - *astrolabe_server
