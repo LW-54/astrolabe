@@ -53,12 +53,26 @@ in
     };
   };
 
-  # --- GIT REPO AUTOMATION ---
-  system.activationScripts.cloneConfig = {
-    text = ''
-      if [ ! -d "/home/lw/astrolabe-config" ]; then
+# --- GIT REPO AUTOMATION (NETWORK AWARE) ---
+  systemd.services.clone-astrolabe-repo = {
+    description = "Clone Astrolabe Config Repository on First Boot";
+    wantedBy = [ "multi-user.target" ];
+
+    # Strictly wait for the network to be fully online
+    wants = [ "network-online.target" ];
+    after = [ "network-online.target" ];
+
+    serviceConfig = {
+      Type = "oneshot";
+      # Running it as your user means we don't even need to chown the files!
+      User = "lw";
+      WorkingDirectory = "/home/lw";
+      RemainAfterExit = true;
+    };
+
+    script = ''
+      if [ ! -d "/home/lw/astrolabe" ]; then
         ${pkgs.git}/bin/git clone https://github.com/LW-54/astrolabe.git /home/lw/astrolabe
-        chown -R lw:users /home/lw/astrolabe
       fi
     '';
   };
