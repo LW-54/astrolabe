@@ -101,6 +101,22 @@ in
     ttyd
   ];
 
+  sops.secrets."github_ssh_key" = {
+      owner = "lw";
+      path = "/home/lw/.ssh/id_ed25519";
+      mode = "0400";
+    };
+
+  programs.git = {
+      enable = true;
+      config = {
+        init.defaultBranch = "main";
+        pull.rebase = false;
+        user.name = "LW-54";
+        user.email = "leonardwilsonb@gmail.com";
+      };
+    };
+
   systemd.services.ttyd-web = {
     description = "ttyd Web Terminal";
     wantedBy = [ "multi-user.target" ];
