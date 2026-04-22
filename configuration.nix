@@ -47,6 +47,8 @@ in
       "--keep-monthly 12"
     ];
 
+    initialize = true;
+
     timerConfig = {
       OnCalendar = "05:00";
       Persistent = true;
