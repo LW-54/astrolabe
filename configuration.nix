@@ -54,17 +54,17 @@ in
   };
 
 # --- GIT REPO AUTOMATION (NETWORK AWARE) ---
-  systemd.services.clone-astrolabe-repo = {
+systemd.services.clone-astrolabe-repo = {
     description = "Clone Astrolabe Config Repository on First Boot";
     wantedBy = [ "multi-user.target" ];
-
-    # Strictly wait for the network to be fully online
     wants = [ "network-online.target" ];
     after = [ "network-online.target" ];
 
+    # ADDED: This gives the service access to the git and ssh binaries
+    path = [ pkgs.git pkgs.openssh ];
+
     serviceConfig = {
       Type = "oneshot";
-      # Running it as your user means we don't even need to chown the files!
       User = "lw";
       WorkingDirectory = "/home/lw";
       RemainAfterExit = true;
@@ -72,7 +72,8 @@ in
 
     script = ''
       if [ ! -d "/home/lw/astrolabe" ]; then
-        ${pkgs.git}/bin/git clone git@github.com:LW-54/astrolabe.git /home/lw/astrolabe
+        # We can now just use 'git' directly because it's in the path above
+        git clone git@github.com:LW-54/astrolabe.git /home/lw/astrolabe
       fi
     '';
   };
