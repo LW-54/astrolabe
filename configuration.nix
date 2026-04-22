@@ -50,7 +50,7 @@ in
     initialize = true;
 
     timerConfig = {
-      OnCalendar = "05:00";
+      OnCalendar = "04:00";
       Persistent = true;
     };
   };
