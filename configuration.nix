@@ -57,10 +57,11 @@ in
 systemd.services.clone-astrolabe-repo = {
     description = "Clone Astrolabe Config Repository on First Boot";
     wantedBy = [ "multi-user.target" ];
-    wants = [ "network-online.target" ];
-    after = [ "network-online.target" ];
 
-    # ADDED: This gives the service access to the git and ssh binaries
+    # 1. Timing: Wait for network AND for SOPS to finish decrypting your keys
+    wants = [ "network-online.target" "sops-nix.service" ];
+    after = [ "network-online.target" "sops-nix.service" ];
+
     path = [ pkgs.git pkgs.openssh ];
 
     serviceConfig = {
@@ -71,8 +72,15 @@ systemd.services.clone-astrolabe-repo = {
     };
 
     script = ''
+      # 2. Wait up to 10 seconds for the SSH key to actually appear on disk
+      for i in {1..10}; do
+        if [ -f "/home/lw/.ssh/id_ed25519" ]; then break; fi
+        sleep 1
+      done
+
       if [ ! -d "/home/lw/astrolabe" ]; then
-        # We can now just use 'git' directly because it's in the path above
+        # 3. The "Force Trust" flag: Tells SSH to ignore host checking ONLY for this command
+        export GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no"
         git clone git@github.com:LW-54/astrolabe.git /home/lw/astrolabe
       fi
     '';
