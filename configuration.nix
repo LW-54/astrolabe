@@ -72,7 +72,7 @@ in
 
     script = ''
       if [ ! -d "/home/lw/astrolabe" ]; then
-        ${pkgs.git}/bin/git clone https://github.com/LW-54/astrolabe.git /home/lw/astrolabe
+        ${pkgs.git}/bin/git clone git@github.com:LW-54/astrolabe.git /home/lw/astrolabe
       fi
     '';
   };
@@ -83,6 +83,8 @@ in
   };
 
   users.users.root.openssh.authorizedKeys.keys = [ "${sshKey} master-key" ];
+
+  security.sudo.wheelNeedsPassword = false;
 
   users.users.lw = {
     isNormalUser = true;
