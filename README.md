@@ -15,6 +15,11 @@ mkdir -p /tmp/extra-files/var/lib/sops-nix/
 cp ~/.config/sops/age/keys.txt /tmp/extra-files/var/lib/sops-nix/key.txt
 ```
 
+Secrets can be edited with
+```bash
+EDITOR=nano nix-shell -p sops --run "sops secrets/secrets.yaml"
+```
+
 ### 2. Provision the OS
 Run this from your local machine to wipe the VPS and install the configuration.
 
