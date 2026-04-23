@@ -13,7 +13,7 @@ in
     (modulesPath + "/profiles/qemu-guest.nix")
     ./services/vaultwarden/vaultwarden.nix
     ./services/jellyfin/jellyfin.nix
-    #./services/seerr/seerr.nix
+    ./services/seerr/seerr.nix
   ];
 
   networking.hostName = "astrolabe";

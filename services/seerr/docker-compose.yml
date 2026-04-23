@@ -1,0 +1,23 @@
+services:
+    seerr:
+        image: ghcr.io/seerr-team/seerr:latest
+        container_name: seerr
+        restart: unless-stopped
+        ports:
+            - "5055:5055"
+        volumes:
+            - /opt/docker-data/seerr/config:/app/config
+
+    seerrbridge:
+        image: ghcr.io/woahai321/seerrbridge:latest
+        container_name: seerrbridge
+        restart: unless-stopped
+        ports:
+            - "8777:8777"
+        volumes:
+            - /opt/docker-data/seerr/bridge-data:/app/data
+        # Inject the SOPS decrypted file safely
+        env_file:
+            - /run/secrets/seerrbridge_env
+        depends_on:
+            - seerr
