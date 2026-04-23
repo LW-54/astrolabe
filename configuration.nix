@@ -5,6 +5,9 @@ let
   sshKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOmdqlhZ0Pl74W0tNTu/L2iDziaIgafdo8LuTn2Ui/Cg";
 in
 {
+  _module.args = {
+    inherit domain;
+  };
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     (modulesPath + "/profiles/qemu-guest.nix")
@@ -154,7 +157,7 @@ systemd.services.clone-astrolabe-repo = {
   services.caddy = {
     enable = true;
     virtualHosts = {
-      "term.${domain}" = { #change back to ttyd after 23/04/2026
+      "ttyd.${domain}" = { #change back to ttyd after 23/04/2026
         extraConfig = ''
           basicauth / {
             admin $2a$14$vYmK17NeNy4sdgvOm6SAheSigD5Lnus70w8aJfQgLBceSG0hlVrPK
