@@ -37,7 +37,7 @@ services:
         environment:
             # Wire Rclone directly to Zurg's internal network address
             - RCLONE_CONFIG_ZURG_TYPE=webdav
-            - RCLONE_CONFIG_ZURG_URL=http://zurg:9999
+            - RCLONE_CONFIG_ZURG_URL=http://zurg:9999/dav
             - RCLONE_CONFIG_ZURG_VENDOR=other
         command: "mount zurg: /data --allow-non-empty --allow-other --dir-cache-time 10s --vfs-cache-mode full"
         volumes:
