@@ -2,7 +2,9 @@
 
 {
   # Decrypt SeerrBridge environment variables
-  sops.secrets."seerrbridge_env" = {};
+  sops.secrets."seerrbridge_env" = {
+      owner = "lw";
+    };
 
   # Caddy Reverse Proxy
   services.caddy.virtualHosts = {
