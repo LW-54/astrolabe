@@ -1,14 +1,14 @@
 { config, pkgs, domain, ... }:
 
 {
-  # Decrypt SeerrBridge environment variables
-  sops.secrets."seerrbridge_env" = {
-      owner = "lw";
-    };
+  # The Nix Way to fix permissions: Create the folder securely before Docker starts
+  systemd.tmpfiles.rules = [
+    "d /opt/docker-data/seerr/config 0755 1000 1000 -"
+  ];
 
-  # Caddy Reverse Proxy
+  # Caddy Reverse Proxy (Updated to the correct 3777 port)
   services.caddy.virtualHosts = {
     "seerr.${domain}" = { extraConfig = "reverse_proxy 127.0.0.1:5055"; };
-    "bridge.${domain}" = { extraConfig = "reverse_proxy 127.0.0.1:8777"; };
+    "seerrbridge.${domain}" = { extraConfig = "reverse_proxy 127.0.0.1:3777"; };
   };
 }

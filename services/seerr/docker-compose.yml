@@ -13,11 +13,9 @@ services:
         container_name: seerrbridge
         restart: unless-stopped
         ports:
-            - "8777:8777"
+            # Corrected port for the Nuxt frontend
+            - "3777:3777"
         volumes:
             - /opt/docker-data/seerr/bridge-data:/app/data
-        # Inject the SOPS decrypted file safely
-        env_file:
-            - /run/secrets/seerrbridge_env
         depends_on:
             - seerr
