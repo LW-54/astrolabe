@@ -39,7 +39,7 @@ services:
             - RCLONE_CONFIG_ZURG_TYPE=webdav
             - RCLONE_CONFIG_ZURG_URL=http://zurg:9999/dav
             - RCLONE_CONFIG_ZURG_VENDOR=other
-        command: "mount zurg: /data --allow-non-empty --allow-other --dir-cache-time 10s --vfs-cache-mode full"
+        command: "mount zurg: /data --allow-non-empty --allow-other --dir-cache-time 10s --vfs-cache-mode full --vfs-cache-max-size 10G"
         volumes:
             # The `:shared` flag allows Jellyfin (and the host OS) to see this FUSE mount
             - /opt/docker-data/jellyfin/mnt:/data:shared
