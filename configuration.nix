@@ -9,6 +9,7 @@ in
     (modulesPath + "/installer/scan/not-detected.nix")
     (modulesPath + "/profiles/qemu-guest.nix")
     ./services/vaultwarden/vaultwarden.nix
+    #./services/media/media.nix
   ];
 
   networking.hostName = "astrolabe";
