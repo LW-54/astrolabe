@@ -13,9 +13,12 @@ services:
         container_name: seerrbridge
         restart: unless-stopped
         ports:
-            # Corrected port for the Nuxt frontend
-            - "3777:3777"
+            - "3777:3777" # Frontend
+            - "8777:8777" # Backend API
+            - "8778:8778" # Setup Wizard API
         volumes:
             - /opt/docker-data/seerr/bridge-data:/app/data
+            - /opt/docker-data/seerr/bridge-logs:/app/logs
+            - /opt/docker-data/seerr/bridge-db:/var/lib/mysql
         depends_on:
             - seerr
