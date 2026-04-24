@@ -19,5 +19,7 @@ services:
             - /opt/docker-data/seerr/cli_debrid/db_content:/app/db_content
             - /opt/docker-data/seerr/cli_debrid/logs:/app/logs
             - /opt/docker-data/seerr/cli_debrid/autobase_storage_v4:/app/autobase_storage_v4
+            # The vital link! The exact same volume mapped to the exact same path.
+            - /opt/docker-data/media:/media
         depends_on:
             - seerr

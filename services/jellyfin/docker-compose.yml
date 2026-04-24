@@ -8,8 +8,8 @@ services:
         volumes:
             - /opt/docker-data/jellyfin/jellyfin-config:/config
             - /opt/docker-data/jellyfin/jellyfin-cache:/cache
-            # Mount the Rclone output as read-only media
-            - /opt/docker-data/jellyfin/mnt:/media:ro
+            # Mount the unified media folder!
+            - /opt/docker-data/media:/media:ro
         depends_on:
             - rclone
 
@@ -20,7 +20,6 @@ services:
         ports:
             - "9999:9999"
         volumes:
-            # Inject the SOPS decrypted config.yml directly into the container as a file
             - /run/secrets/zurg_config:/app/config.yml:ro
             - /opt/docker-data/jellyfin/zurg-data:/app/data
 
@@ -29,19 +28,18 @@ services:
         container_name: rclone
         restart: unless-stopped
         cap_add:
-            - SYS_ADMIN # Required for FUSE mounts
+            - SYS_ADMIN
         devices:
             - /dev/fuse
         security_opt:
             - apparmor:unconfined
         environment:
-            # Wire Rclone directly to Zurg's internal network address
             - RCLONE_CONFIG_ZURG_TYPE=webdav
             - RCLONE_CONFIG_ZURG_URL=http://zurg:9999/dav
             - RCLONE_CONFIG_ZURG_VENDOR=other
         command: "mount zurg: /data --allow-non-empty --allow-other --dir-cache-time 10s --vfs-cache-mode full --vfs-cache-max-size 10G"
         volumes:
-            # The `:shared` flag allows Jellyfin (and the host OS) to see this FUSE mount
-            - /opt/docker-data/jellyfin/mnt:/data:shared
+            # Rclone outputs directly into the zurg subfolder
+            - /opt/docker-data/media/zurg:/data:shared
         depends_on:
             - zurg
