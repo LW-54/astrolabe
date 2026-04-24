@@ -8,17 +8,16 @@ services:
         volumes:
             - /opt/docker-data/seerr/config:/app/config
 
-    seerrbridge:
-        image: ghcr.io/woahai321/seerrbridge:latest
-        container_name: seerrbridge
+    cli_debrid:
+        image: godver3/cli_debrid:latest
+        container_name: cli_debrid
         restart: unless-stopped
         ports:
-            - "3777:3777" # Frontend
-            - "8777:8777" # Backend API
-            - "8778:8778" # Setup Wizard API
+            - "5000:5000"
         volumes:
-            - /opt/docker-data/seerr/bridge-data:/app/data
-            - /opt/docker-data/seerr/bridge-logs:/app/logs
-            - /opt/docker-data/seerr/bridge-db:/var/lib/mysql
+            - /opt/docker-data/seerr/cli_debrid/config:/app/config
+            - /opt/docker-data/seerr/cli_debrid/db_content:/app/db_content
+            - /opt/docker-data/seerr/cli_debrid/logs:/app/logs
+            - /opt/docker-data/seerr/cli_debrid/autobase_storage_v4:/app/autobase_storage_v4
         depends_on:
             - seerr
