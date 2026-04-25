@@ -9,7 +9,7 @@ services:
             - /opt/docker-data/jellyfin/jellyfin-config:/config
             - /opt/docker-data/jellyfin/jellyfin-cache:/cache
             - /opt/docker-data/media/symlinks:/media/symlinks:ro
-            - /opt/docker-data/media/zurg:/media/zurg:ro
+            - /opt/docker-data/media/zurg:/media/zurg:ro,rslave
         depends_on:
             - rclone
 
