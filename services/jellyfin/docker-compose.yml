@@ -22,6 +22,7 @@ services:
         volumes:
             - /run/secrets/zurg_config:/app/config.yml:ro
             - /opt/docker-data/jellyfin/zurg-data:/app/data
+            - /etc/zurg_webhook.sh:/app/webhook.sh:ro
 
     rclone:
         image: rclone/rclone:latest
