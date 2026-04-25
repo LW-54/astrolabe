@@ -15,11 +15,12 @@ services:
         ports:
             - "5000:5000"
         volumes:
-            - /opt/docker-data/seerr/cli_debrid/config:/app/config
-            - /opt/docker-data/seerr/cli_debrid/db_content:/app/db_content
-            - /opt/docker-data/seerr/cli_debrid/logs:/app/logs
-            - /opt/docker-data/seerr/cli_debrid/autobase_storage_v4:/app/autobase_storage_v4
-            # The vital link! The exact same volume mapped to the exact same path.
+            # Changed /app to /user on the right side of the colon
+            - /opt/docker-data/seerr/cli_debrid/config:/user/config
+            - /opt/docker-data/seerr/cli_debrid/db_content:/user/db_content
+            - /opt/docker-data/seerr/cli_debrid/logs:/user/logs
+            - /opt/docker-data/seerr/cli_debrid/autobase_storage_v4:/user/autobase_storage_v4
+            # This media link stays exactly the same
             - /opt/docker-data/media:/media
         depends_on:
             - seerr
