@@ -8,8 +8,8 @@ services:
         volumes:
             - /opt/docker-data/jellyfin/jellyfin-config:/config
             - /opt/docker-data/jellyfin/jellyfin-cache:/cache
-            # Mount the unified media folder!
-            - /opt/docker-data/media:/media:ro
+            - /opt/docker-data/media/symlinks:/media/symlinks:ro
+            - /opt/docker-data/media/zurg:/media/zurg:ro
         depends_on:
             - rclone
 
