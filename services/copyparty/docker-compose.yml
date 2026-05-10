@@ -1,6 +1,6 @@
 services:
     copyparty:
-        image: copyparty/copyparty:latest
+        image: copyparty/ac:latest
         container_name: copyparty
         restart: unless-stopped
         environment:
