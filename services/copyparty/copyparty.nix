@@ -37,7 +37,8 @@
 
       echo "[/]" >> $CONF
       echo "/home/lw" >> $CONF
-      echo "a: admin" >> $CONF
+      echo "accs:" >> $CONF
+      echo "  A: admin" >> $CONF
 
       # Ensure correct permissions
       chown 1000:100 $CONF
