@@ -7,6 +7,9 @@ services:
             - PUID=1000
             - PGID=100
             - TZ=Etc/UTC
+            - CUSTOM_RES_W=1920
+            - CUSTOM_RES_H=1080
+            - LC_ALL=en_US.UTF-8
         volumes:
             - /opt/docker-data/obsidian-web/config:/config
             - /home/lw/obsidian:/vault
