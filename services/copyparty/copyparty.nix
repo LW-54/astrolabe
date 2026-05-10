@@ -11,9 +11,9 @@
     "d /opt/docker-data/copyparty/config 0755 1000 100 - -"
   ];
 
-  # 3. Startup Script to generate the copyparty.conf file
-  systemd.services.init-copyparty-config = {
-    description = "Generate Copyparty copyparty.conf from SOPS secret";
+  # 3. Startup Script to copy the SOPS secret directly to users.txt
+  systemd.services.init-copyparty-users = {
+    description = "Copy SOPS secret to Copyparty users.txt";
     wantedBy = [ "multi-user.target" ];
     after = [ "network-online.target" "sops-nix.service" ];
     wants = [ "sops-nix.service" ];
@@ -24,28 +24,17 @@
     };
 
     script = ''
-      CONF="/opt/docker-data/copyparty/config/copyparty.conf"
+      # Make sure the config directory exists
       mkdir -p /opt/docker-data/copyparty/config
 
-      # Build the configuration file
-      echo "[global]" > $CONF
-      echo "e2d" >> $CONF
-      echo "e2t" >> $CONF
-      echo "" >> $CONF
-
-      echo "[accounts]" >> $CONF
-      cat ${config.sops.secrets."copyparty_users".path} >> $CONF
-      echo "" >> $CONF
-
-      echo "[/]" >> $CONF
-      echo "/home/lw" >> $CONF
-      echo "accs:" >> $CONF
-      echo "  A: admin" >> $CONF
+      # Copy the entire contents of the SOPS secret into the expected file
+      cp ${config.sops.secrets."copyparty_users".path} /opt/docker-data/copyparty/config/users.txt
 
       # Ensure correct permissions
-      chown 1000:100 $CONF
-      chmod 600 $CONF
-    '';  };
+      chown 1000:100 /opt/docker-data/copyparty/config/users.txt
+      chmod 600 /opt/docker-data/copyparty/config/users.txt
+    '';
+  };
 
   # 4. Reverse Proxy for Copyparty
   services.caddy.virtualHosts."copyparty.${domain}" = {
