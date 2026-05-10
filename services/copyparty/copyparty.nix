@@ -24,20 +24,25 @@
     };
 
     script = ''
-      # Make sure the config directory exists
+      CONF="/opt/docker-data/copyparty/config/copyparty.conf"
       mkdir -p /opt/docker-data/copyparty/config
 
-      # Create the config file with the [accounts] header
-      echo "[accounts]" > /opt/docker-data/copyparty/config/copyparty.conf
+      # Build the configuration file
+      echo "[global]" > $CONF
+      echo "" >> $CONF
 
-      # Append the user list from the SOPS secret
-      cat ${config.sops.secrets."copyparty_users".path} >> /opt/docker-data/copyparty/config/copyparty.conf
+      echo "[accounts]" >> $CONF
+      cat ${config.sops.secrets."copyparty_users".path} >> $CONF
+      echo "" >> $CONF
+
+      echo "[/]" >> $CONF
+      echo "/home/lw" >> $CONF
+      echo "accs: A: admin" >> $CONF
 
       # Ensure correct permissions
-      chown 1000:100 /opt/docker-data/copyparty/config/copyparty.conf
-      chmod 600 /opt/docker-data/copyparty/config/copyparty.conf
-    '';
-  };
+      chown 1000:100 $CONF
+      chmod 600 $CONF
+    '';  };
 
   # 4. Reverse Proxy for Copyparty
   services.caddy.virtualHosts."copyparty.${domain}" = {
