@@ -7,8 +7,6 @@ services:
             # We map this container to the same UID/GID as the `lw` user on the host
             - PUID=1000
             - PGID=100
-        env_file:
-            - /run/secrets/copyparty_env
         volumes:
             - /opt/docker-data/copyparty/config:/cfg
             - /home/lw:/home/lw

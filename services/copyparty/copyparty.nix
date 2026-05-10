@@ -1,9 +1,9 @@
 { config, pkgs, domain, ... }:
 
 {
-  # 1. Provide the secret path to SOPS
-  sops.secrets."copyparty_env" = {
-    # This will hold your main admin credentials or other environment variables if needed
+  # 1. Define the secret that will hold the entire users.txt file
+  sops.secrets."copyparty_users" = {
+    owner = "lw"; # Give your user access so the container can read it if mapped directly
   };
 
   # 2. Permissions for config folder
@@ -11,16 +11,15 @@
     "d /opt/docker-data/copyparty/config 0755 1000 100 - -"
   ];
 
-  # 3. Startup Script to create the users.txt file securely
+  # 3. Startup Script to copy the SOPS secret directly to the config directory
   systemd.services.init-copyparty-users = {
-    description = "Create Copyparty users.txt from SOPS secret";
+    description = "Copy SOPS secret to Copyparty users.txt";
     wantedBy = [ "multi-user.target" ];
     after = [ "network-online.target" "sops-nix.service" ];
     wants = [ "sops-nix.service" ];
 
     serviceConfig = {
       Type = "oneshot";
-      EnvironmentFile = config.sops.secrets."copyparty_env".path;
       RemainAfterExit = true;
     };
 
@@ -28,9 +27,8 @@
       # Make sure the config directory exists
       mkdir -p /opt/docker-data/copyparty/config
 
-      # Write the credentials to the file Copyparty expects
-      # Format: username:password
-      echo "admin:$COPYPARTY_PASSWORD" > /opt/docker-data/copyparty/config/users.txt
+      # Copy the entire contents of the SOPS secret into the expected file
+      cp ${config.sops.secrets."copyparty_users".path} /opt/docker-data/copyparty/config/users.txt
 
       # Ensure correct permissions
       chown 1000:100 /opt/docker-data/copyparty/config/users.txt
