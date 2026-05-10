@@ -27,8 +27,9 @@
       # Make sure the config directory exists
       mkdir -p /opt/docker-data/copyparty/config
 
-      # Copy the entire contents of the SOPS secret into the expected file
-      cp ${config.sops.secrets."copyparty_users".path} /opt/docker-data/copyparty/config/users.txt
+      # Copy the contents of the SOPS secret, but STRIP all newlines
+      # to prevent Copyparty's -a parser from crashing on blank lines.
+      tr -d '\n' < ${config.sops.secrets."copyparty_users".path} > /opt/docker-data/copyparty/config/users.txt
 
       # Ensure correct permissions
       chown 1000:100 /opt/docker-data/copyparty/config/users.txt
