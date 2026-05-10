@@ -1,0 +1,14 @@
+services:
+    obsidian:
+        image: lscr.io/linuxserver/obsidian:latest
+        container_name: obsidian-web
+        restart: unless-stopped
+        environment:
+            - PUID=1000
+            - PGID=100
+            - TZ=Etc/UTC
+        volumes:
+            - /opt/docker-data/obsidian-web/config:/config
+            - /home/lw/obsidian:/vault
+        ports:
+            - "7211:3000"
