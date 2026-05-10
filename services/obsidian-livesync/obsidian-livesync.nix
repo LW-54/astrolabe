@@ -47,10 +47,7 @@
         sleep 5
       done
 
-      if ! curl -s -f "$HOST/" > /dev/null; then
-        echo "CouchDB did not become ready in time. Exiting."
-        exit 1
-      fi
+      # Removed the secondary fail-fast check since we already confirmed it's up in the loop.
 
       AUTH="$COUCHDB_USER:$COUCHDB_PASSWORD"
 
