@@ -38,7 +38,9 @@
       # Wait for CouchDB to become available (up to 2 minutes)
       echo "Waiting for CouchDB to be ready on $HOST..."
       for i in {1..24}; do
-        if curl -s -f "$HOST/" > /dev/null; then
+        # We check for ANY response (even 401) to know the server is up.
+        # Removing -f so it doesn't fail on 401 Unauthorized.
+        if curl -s "$HOST/" > /dev/null; then
           echo "CouchDB is up!"
           break
         fi
