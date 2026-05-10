@@ -16,6 +16,7 @@ in
     ./services/seerr/seerr.nix
     ./services/obsidian-livesync/obsidian-livesync.nix
     ./services/obsidian-web/obsidian-web.nix
+    ./services/copyparty/copyparty.nix
   ];
 
   networking.hostName = "astrolabe";
