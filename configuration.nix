@@ -14,6 +14,7 @@ in
     ./services/vaultwarden/vaultwarden.nix
     ./services/jellyfin/jellyfin.nix
     ./services/seerr/seerr.nix
+    ./services/obsidian-livesync/obsidian-livesync.nix
   ];
 
   networking.hostName = "astrolabe";
