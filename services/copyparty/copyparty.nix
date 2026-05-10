@@ -1,19 +1,16 @@
 { config, pkgs, domain, ... }:
 
 {
-  # 1. Define the secret that will hold the account list (user:pass)
   sops.secrets."copyparty_users" = {
     owner = "lw";
   };
 
-  # 2. Permissions for config folder
   systemd.tmpfiles.rules = [
     "d /opt/docker-data/copyparty/config 0755 1000 100 - -"
   ];
 
-  # 3. Startup Script to copy the SOPS secret directly to users.txt
-  systemd.services.init-copyparty-users = {
-    description = "Copy SOPS secret to Copyparty users.txt";
+  systemd.services.init-copyparty-config = {
+    description = "Generate Copyparty config from SOPS secret";
     wantedBy = [ "multi-user.target" ];
     after = [ "network-online.target" "sops-nix.service" ];
     wants = [ "sops-nix.service" ];
@@ -24,20 +21,31 @@
     };
 
     script = ''
-      # Make sure the config directory exists
+      CONF="/opt/docker-data/copyparty/config/copyparty.conf"
       mkdir -p /opt/docker-data/copyparty/config
 
-      # Copy the contents of the SOPS secret, but STRIP all newlines
-      # to prevent Copyparty's -a parser from crashing on blank lines.
-      tr -d '\n' < ${config.sops.secrets."copyparty_users".path} > /opt/docker-data/copyparty/config/users.txt
+      # 1. Global Settings
+      echo "[global]" > $CONF
+      echo "e2d" >> $CONF
+      echo "e2t" >> $CONF
+      echo "" >> $CONF
 
-      # Ensure correct permissions
-      chown 1000:100 /opt/docker-data/copyparty/config/users.txt
-      chmod 600 /opt/docker-data/copyparty/config/users.txt
+      # 2. Accounts (Sourced securely from SOPS)
+      echo "[accounts]" >> $CONF
+      cat ${config.sops.secrets."copyparty_users".path} >> $CONF
+      echo "" >> $CONF
+
+      # 3. Volume and Permissions
+      echo "[/]" >> $CONF
+      echo "/home/lw" >> $CONF
+      echo "accs:" >> $CONF
+      echo "  A: admin" >> $CONF
+
+      chown 1000:100 $CONF
+      chmod 600 $CONF
     '';
   };
 
-  # 4. Reverse Proxy for Copyparty
   services.caddy.virtualHosts."copyparty.${domain}" = {
     extraConfig = ''
       reverse_proxy 127.0.0.1:3923
