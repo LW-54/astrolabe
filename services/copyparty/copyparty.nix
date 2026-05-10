@@ -24,10 +24,13 @@
       CONF="/opt/docker-data/copyparty/config/copyparty.conf"
       mkdir -p /opt/docker-data/copyparty/config
 
-      # 1. Global Settings
+      # Build the configuration file
       echo "[global]" > $CONF
-      echo "e2d" >> $CONF
-      echo "e2t" >> $CONF
+      echo "rproxy: -1" >> $CONF
+      echo "xff-src: lan" >> $CONF
+      echo "no-cors" >> $CONF
+      echo "e2dsa" >> $CONF
+      echo "e2ts" >> $CONF
       echo "" >> $CONF
 
       # 2. Accounts (Sourced securely from SOPS)
