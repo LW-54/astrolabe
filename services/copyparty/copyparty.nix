@@ -1,9 +1,9 @@
 { config, pkgs, domain, ... }:
 
 {
-  # 1. Define the secret that will hold the entire users.txt file
+  # 1. Define the secret that will hold the account list (user:pass)
   sops.secrets."copyparty_users" = {
-    owner = "lw"; # Give your user access so the container can read it if mapped directly
+    owner = "lw";
   };
 
   # 2. Permissions for config folder
@@ -11,9 +11,9 @@
     "d /opt/docker-data/copyparty/config 0755 1000 100 - -"
   ];
 
-  # 3. Startup Script to copy the SOPS secret directly to the config directory
-  systemd.services.init-copyparty-users = {
-    description = "Copy SOPS secret to Copyparty users.txt";
+  # 3. Startup Script to generate the copyparty.conf file
+  systemd.services.init-copyparty-config = {
+    description = "Generate Copyparty copyparty.conf from SOPS secret";
     wantedBy = [ "multi-user.target" ];
     after = [ "network-online.target" "sops-nix.service" ];
     wants = [ "sops-nix.service" ];
@@ -27,12 +27,15 @@
       # Make sure the config directory exists
       mkdir -p /opt/docker-data/copyparty/config
 
-      # Copy the entire contents of the SOPS secret into the expected file
-      cp ${config.sops.secrets."copyparty_users".path} /opt/docker-data/copyparty/config/users.txt
+      # Create the config file with the [accounts] header
+      echo "[accounts]" > /opt/docker-data/copyparty/config/copyparty.conf
+
+      # Append the user list from the SOPS secret
+      cat ${config.sops.secrets."copyparty_users".path} >> /opt/docker-data/copyparty/config/copyparty.conf
 
       # Ensure correct permissions
-      chown 1000:100 /opt/docker-data/copyparty/config/users.txt
-      chmod 600 /opt/docker-data/copyparty/config/users.txt
+      chown 1000:100 /opt/docker-data/copyparty/config/copyparty.conf
+      chmod 600 /opt/docker-data/copyparty/config/copyparty.conf
     '';
   };
 

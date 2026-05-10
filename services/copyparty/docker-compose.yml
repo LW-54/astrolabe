@@ -13,12 +13,9 @@ services:
         ports:
             - "3923:3923"
         command:
-            # -p 3923: Run on this port inside the container
-            # -v /home/lw::A: Tells Copyparty to serve /home/lw at the root of the site, requiring Admin (A) access
-            # -a @/cfg/users.txt: Tells Copyparty to read users and passwords from this file
             - "-p"
             - "3923"
             - "-v"
             - "/home/lw::A"
-            - "-a"
-            - "@/cfg/users.txt"
+            - "-c"
+            - "/cfg/copyparty.conf"
