@@ -13,6 +13,3 @@ services:
         ports:
             - "3923:3923"
         working_dir: /var/empty
-        command:
-            - "-e2d" # Disable CORS checks (safe behind Caddy)
-            - "-e2t" # Trust reverse-proxy headers (fixes HTTPS detection)

@@ -29,6 +29,8 @@
 
       # Build the configuration file
       echo "[global]" > $CONF
+      echo "e2d" >> $CONF
+      echo "e2t" >> $CONF
       echo "" >> $CONF
 
       echo "[accounts]" >> $CONF
