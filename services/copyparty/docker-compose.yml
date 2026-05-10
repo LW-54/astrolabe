@@ -12,6 +12,7 @@ services:
             - /home/lw:/home/lw
         ports:
             - "3923:3923"
+        working_dir: /var/empty
         command:
             - "-c"
             - "/cfg/copyparty.conf"
