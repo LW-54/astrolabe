@@ -1,6 +1,8 @@
 { config, pkgs, domain, ... }:
 
 {
+  sops.secrets."reading-stack/kavita_api_key" = { };
+
   systemd.tmpfiles.rules = [
     "d /opt/docker-data/reading-stack/kavita 0755 1000 1000 -"
     "Z /opt/docker-data/reading-stack/kavita - 1000 1000 -"
