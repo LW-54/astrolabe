@@ -31,13 +31,17 @@
         apiKey: "${config.sops.placeholder."reading-stack/kavita_api_key"}"
         eventListener:
           enabled: true
-      metadataUpdate:
-        default:
-          libraryType: "MANGA"
-          updateModes: [ API ]
-          aggregate: true
-          bookCovers: true
-          seriesCovers: true
+          libraries: []
+        metadataUpdate:
+          default:
+            libraryType: "MANGA"
+            updateModes: [ API ]
+            aggregate: true
+            bookCovers: true
+            seriesCovers: true
+            postProcessing:
+              seriesTitle: true
+              orderBooks: true
       database:
         file: /config/database.sqlite
       metadataProviders:
@@ -50,6 +54,10 @@
             enabled: false
           nautiljon:
             enabled: true
+      logging:
+        level:
+          root: INFO
+          snd.komf: DEBUG
     '';
   };
 
