@@ -22,8 +22,9 @@
   ];
 
   # Securely generate the Komf config with the secret key injected
+  # Strictly following the official example structure: https://github.com/Snd-R/komf
   sops.templates."komf-application.yml" = {
-    path = "/run/secrets/komf-application.yml";
+    path = "/run/komf_app.yml";
     owner = "lw";
     content = ''
       kavita:
@@ -33,24 +34,33 @@
           enabled: true
         metadataUpdate:
           default:
-            aggregate: true
-            bookThumbnails: true
-            seriesThumbnails: true
-            overrideExistingCovers: true
+            libraryType: "MANGA"
             updateModes: [ API ]
+            aggregate: true
+            bookCovers: true
+            seriesCovers: true
+            overrideExistingCovers: true
+            lockCovers: true
+            postProcessing:
+              seriesTitle: true
+              orderBooks: true
+
+      database:
+        file: /config/database.sqlite
+
       metadataProviders:
         defaultProviders:
           mangaUpdates:
+            priority: 10
             enabled: true
-            priority: 1
           aniList:
+            priority: 20
             enabled: true
-            priority: 2
-      database:
-        file: /config/database.sqlite
-      logging:
-        level:
-          snd.komf: DEBUG
+
+      server:
+        port: 8085
+
+      logLevel: DEBUG
     '';
   };
 
