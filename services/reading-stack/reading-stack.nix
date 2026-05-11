@@ -19,17 +19,14 @@
     "d /opt/docker-data/reading-stack/media/comics 0777 root root -"
     "d /opt/docker-data/reading-stack/media/books 0777 root root -"
     "Z /opt/docker-data/reading-stack/media - root root -"
-  ];
+    ];
 
-  # Securely generate the Komf config with the secret key injected
-  # Strictly following the official example structure: https://github.com/Snd-R/komf
-  sops.templates."komf-application.yml" = {
-    path = "/run/komf_app.yml";
-    owner = "lw";
-    content = ''
+    # 1. Static YAML Structure (No secrets here, so it's perfectly safe)
+    environment.etc."komf/application.yml" = {
+    mode = "0644";
+    text = ''
       kavita:
         baseUri: "http://kavita:5000"
-        apiKey: "${config.sops.placeholder."reading-stack/kavita_api_key"}"
         eventListener:
           enabled: true
         metadataUpdate:
@@ -44,10 +41,8 @@
             postProcessing:
               seriesTitle: true
               orderBooks: true
-
       database:
         file: /config/database.sqlite
-
       metadataProviders:
         defaultProviders:
           mangaUpdates:
@@ -56,15 +51,23 @@
           aniList:
             priority: 20
             enabled: true
-
       server:
         port: 8085
-
       logLevel: DEBUG
     '';
-  };
+    };
 
-  # Caddy Reverse Proxy
+    # 2. Secret Environment File (Injects only the API key)
+    sops.templates."komf_env" = {
+    path = "/run/komf_env";
+    owner = "lw";
+    content = ''
+      KOMF_KAVITA_API_KEY=${config.sops.placeholder."reading-stack/kavita_api_key"}
+    '';
+    };
+
+    # Caddy Reverse Proxy
+
   services.caddy.virtualHosts = {
     "kavita.${domain}" = { extraConfig = "reverse_proxy 127.0.0.1:5002"; };
     "suwayomi.${domain}" = { extraConfig = "reverse_proxy 127.0.0.1:8085"; };
