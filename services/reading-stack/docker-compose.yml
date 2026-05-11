@@ -29,6 +29,10 @@ services:
             - TZ=Etc/UTC
             - FLARESOLVERR_ENABLED=true
             - FLARESOLVERR_URL=http://flaresolverr:8191
+            # "Gold Standard" organization: removes the Source folder layer
+            # so Kavita sees individual Manga titles as Series.
+            - TACHIDESK_SERVER_DOWNLOADPATHTEMPLATE={manga_title}/{chapter_title}
+            - TACHIDESK_SERVER_DOWNLOADASCBZ=true
         networks:
             - default
             - flaresolverr-net
