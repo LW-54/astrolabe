@@ -26,19 +26,20 @@
     path = "/run/secrets/komf-application.yml";
     owner = "lw";
     content = ''
+      server:
+        port: 8085
+        logLevel: DEBUG
       kavita:
         baseUri: "http://kavita:5000"
         apiKey: "${config.sops.placeholder."reading-stack/kavita_api_key"}"
         eventListener:
           enabled: true
-          libraries: []
         metadataUpdate:
           default:
-            libraryType: "MANGA"
-            updateModes: [ API ]
             aggregate: true
             bookCovers: true
             seriesCovers: true
+            updateModes: [ API ]
             postProcessing:
               seriesTitle: true
               orderBooks: true
@@ -47,17 +48,14 @@
       metadataProviders:
         defaultProviders:
           mangaUpdates:
+            priority: 10
             enabled: true
           aniList:
+            priority: 20
             enabled: true
-          mal:
-            enabled: false
           nautiljon:
+            priority: 30
             enabled: true
-      logging:
-        level:
-          root: INFO
-          snd.komf: DEBUG
     '';
   };
 
