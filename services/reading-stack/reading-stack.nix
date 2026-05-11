@@ -31,6 +31,13 @@
         apiKey: "${config.sops.placeholder."reading-stack/kavita_api_key"}"
         eventListener:
           enabled: true
+      metadataUpdate:
+        default:
+          libraryType: "MANGA"
+          updateModes: [ API ]
+          aggregate: true
+          bookCovers: true
+          seriesCovers: true
       database:
         file: /config/database.sqlite
       metadataProviders:
