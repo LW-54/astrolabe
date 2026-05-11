@@ -21,12 +21,13 @@
     "Z /opt/docker-data/reading-stack/media - root root -"
   ];
 
-  # Declarative Komf Configuration
-  environment.etc."komf-application.yml" = {
-    mode = "0644";
-    text = ''
+  # Securely generate the Komf config with the secret key injected
+  sops.templates."komf-application.yml" = {
+    owner = "1000";
+    content = ''
       kavita:
         baseUri: "http://kavita:5000"
+        apiKey: "${config.sops.placeholder."reading-stack/kavita_api_key"}"
         eventListener:
           enabled: true
       database:
