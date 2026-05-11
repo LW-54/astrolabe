@@ -23,7 +23,7 @@
 
   # Securely generate the Komf config with the secret key injected
   sops.templates."komf-application.yml" = {
-    owner = "1000";
+    owner = "lw";
     content = ''
       kavita:
         baseUri: "http://kavita:5000"
