@@ -17,6 +17,7 @@ in
     ./services/obsidian-livesync/obsidian-livesync.nix
     ./services/obsidian-web/obsidian-web.nix
     ./services/copyparty/copyparty.nix
+    ./services/reading-stack/reading-stack.nix
   ];
 
   networking.hostName = "astrolabe";

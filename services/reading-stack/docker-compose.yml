@@ -1,0 +1,41 @@
+services:
+  kavita:
+    image: jvmilazz0/kavita:latest
+    container_name: kavita
+    restart: unless-stopped
+    ports:
+      - "5002:5000"
+    volumes:
+      - /opt/docker-data/reading-stack/kavita:/kavita/config
+      # Map the specific subdirectories
+      - /opt/docker-data/reading-stack/media/manga:/manga
+      - /opt/docker-data/reading-stack/media/comics:/comics
+      - /opt/docker-data/reading-stack/media/books:/books
+    environment:
+      - TZ=Etc/UTC
+
+  suwayomi:
+    image: ghcr.io/suwayomi/tachidesk
+    container_name: suwayomi
+    restart: unless-stopped
+    ports:
+      - "8085:4567"
+    volumes:
+      - /opt/docker-data/reading-stack/suwayomi:/home/suwayomi/.local/share/Tachidesk
+      # Point Suwayomi directly to the manga subdirectory
+      - /opt/docker-data/reading-stack/media/manga:/home/suwayomi/.local/share/Tachidesk/downloads
+    environment:
+      - TZ=Etc/UTC
+
+  komf:
+    image: sndxr/komf:latest
+    container_name: komf
+    restart: unless-stopped
+    ports:
+      - "8086:8085"
+    volumes:
+      - /opt/docker-data/reading-stack/komf:/config
+    environment:
+      - TZ=Etc/UTC
+    depends_on:
+      - kavita
