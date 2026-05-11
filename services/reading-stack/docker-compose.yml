@@ -22,8 +22,9 @@ services:
             - "8085:4567"
         volumes:
             - /opt/docker-data/reading-stack/suwayomi:/home/suwayomi/.local/share/Tachidesk
-            # Point Suwayomi directly to the manga subdirectory
-            - /opt/docker-data/reading-stack/media/manga:/home/suwayomi/.local/share/Tachidesk/downloads
+            # Map the internal downloads/mangas folder to the external media/manga folder
+            # This isolates system files (thumbnails) from actual manga.
+            - /opt/docker-data/reading-stack/media/manga:/home/suwayomi/.local/share/Tachidesk/downloads/mangas
         environment:
             - TZ=Etc/UTC
             - FLARESOLVERR_ENABLED=true
