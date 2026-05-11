@@ -13,8 +13,11 @@
     "d /opt/docker-data/reading-stack/komf 0755 1000 1000 -"
     "Z /opt/docker-data/reading-stack/komf - 1000 1000 -"
 
-    # Shared media folder
+    # Shared media folder and subdirectories
     "d /opt/docker-data/reading-stack/media 0777 root root -"
+    "d /opt/docker-data/reading-stack/media/manga 0777 root root -"
+    "d /opt/docker-data/reading-stack/media/comics 0777 root root -"
+    "d /opt/docker-data/reading-stack/media/books 0777 root root -"
     "Z /opt/docker-data/reading-stack/media - root root -"
   ];
 
