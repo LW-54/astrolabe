@@ -29,32 +29,32 @@
       server:
         port: 8085
       kavita:
-        base-uri: "http://kavita:5000"
-        api-key: "${config.sops.placeholder."reading-stack/kavita_api_key"}"
-        event-listener:
+        baseUri: "http://kavita:5000"
+        apiKey: "${config.sops.placeholder."reading-stack/kavita_api_key"}"
+        eventListener:
           enabled: true
-        metadata-update:
+        metadataUpdate:
           default:
             aggregate: true
-            series-thumbnails: true
-            book-thumbnails: true
-            series-metadata: true
-            override-existing-covers: true
-            update-mode: API
-            post-processing:
-              series-title: true
-              order-books: true
+            seriesThumbnails: true
+            bookThumbnails: true
+            seriesMetadata: true
+            overrideExistingCovers: true
+            updateMode: API
+            postProcessing:
+              seriesTitle: true
+              orderBooks: true
       database:
         file: /config/database.sqlite
-      metadata-providers:
-        default-providers:
-          manga-updates:
+      metadataProviders:
+        defaultProviders:
+          mangaUpdates:
             enabled: true
             priority: 1
-          ani-list:
+          aniList:
             enabled: true
             priority: 2
-          manga-dex:
+          mangaDex:
             enabled: true
             priority: 3
       logging:
