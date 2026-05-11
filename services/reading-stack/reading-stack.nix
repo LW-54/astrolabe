@@ -21,46 +21,12 @@
     "Z /opt/docker-data/reading-stack/media - root root -"
   ];
 
-  # Securely generate the Komf config with the secret key injected
-  sops.templates."komf-application.yml" = {
-    path = "/run/secrets/komf-application.yml";
+  # Securely generate the Komf environment file with the secret key injected
+  sops.templates."komf_env" = {
+    path = "/run/secrets/komf_env";
     owner = "lw";
     content = ''
-      server:
-        port: 8085
-      kavita:
-        baseUri: "http://kavita:5000"
-        apiKey: "${config.sops.placeholder."reading-stack/kavita_api_key"}"
-        eventListener:
-          enabled: true
-        metadataUpdate:
-          default:
-            aggregate: true
-            seriesThumbnails: true
-            bookThumbnails: true
-            seriesMetadata: true
-            overrideExistingCovers: true
-            updateMode: API
-            postProcessing:
-              seriesTitle: true
-              orderBooks: true
-      database:
-        file: /config/database.sqlite
-      metadataProviders:
-        defaultProviders:
-          mangaUpdates:
-            enabled: true
-            priority: 1
-          aniList:
-            enabled: true
-            priority: 2
-          mangaDex:
-            enabled: true
-            priority: 3
-      logging:
-        level:
-          root: INFO
-          snd.komf: DEBUG
+      KOMF_KAVITA_API_KEY=${config.sops.placeholder."reading-stack/kavita_api_key"}
     '';
   };
 
