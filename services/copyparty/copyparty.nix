@@ -28,7 +28,6 @@
       echo "[global]" > $CONF
       echo "rproxy: -1" >> $CONF
       echo "xff-src: lan" >> $CONF
-      echo "no-cors" >> $CONF
       echo "e2dsa" >> $CONF
       echo "e2ts" >> $CONF
       echo "" >> $CONF
