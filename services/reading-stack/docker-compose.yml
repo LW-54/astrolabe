@@ -45,6 +45,8 @@ services:
             - "8086:8085"
         volumes:
             - /opt/docker-data/reading-stack/komf:/config
+            # Mount the perfectly formatted YAML from Nix etc
+            - /etc/komf-application.yml:/config/application.yml:ro
             - /run/secrets/reading-stack/kavita_api_key:/run/secrets/kavita_api_key:ro
         environment:
             - TZ=Etc/UTC
