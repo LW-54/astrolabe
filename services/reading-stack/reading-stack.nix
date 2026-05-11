@@ -28,40 +28,40 @@
     content = ''
       server:
         port: 8085
-        logLevel: DEBUG
       kavita:
-        baseUri: "http://kavita:5000"
-        apiKey: "${config.sops.placeholder."reading-stack/kavita_api_key"}"
-        eventListener:
+        base-uri: "http://kavita:5000"
+        api-key: "${config.sops.placeholder."reading-stack/kavita_api_key"}"
+        event-listener:
           enabled: true
-        metadataUpdate:
+        metadata-update:
           default:
             aggregate: true
-            seriesMetadata: true
-            seriesThumbnails: true
-            seriesCovers: true
-            bookThumbnails: true
-            bookCovers: true
-            overrideExistingCovers: true
-            lockCovers: true
-            lockMetadata: true
-            updateMode: API
-            updateModes: [ API ]
-            postProcessing:
-              seriesTitle: true
-              orderBooks: true
+            series-thumbnails: true
+            book-thumbnails: true
+            series-metadata: true
+            override-existing-covers: true
+            update-mode: API
+            post-processing:
+              series-title: true
+              order-books: true
       database:
         file: /config/database.sqlite
-      metadataProviders:
-        defaultProviders:
-          mangaUpdates:
+      metadata-providers:
+        default-providers:
+          manga-updates:
             enabled: true
             priority: 1
-          aniList:
+          ani-list:
             enabled: true
             priority: 2
-          nautiljon:
+          manga-dex:
             enabled: true
+            priority: 3
+      logging:
+        level:
+          root: INFO
+          snd.komf: DEBUG
+
             priority: 3
     '';
   };
