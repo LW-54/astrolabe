@@ -1,0 +1,15 @@
+services:
+    flaresolverr:
+        image: flaresolverr/flaresolverr:latest
+        container_name: flaresolverr
+        restart: unless-stopped
+        environment:
+            - TZ=Etc/UTC
+            - LOG_LEVEL=info
+        networks:
+            - flaresolverr-net
+
+networks:
+    flaresolverr-net:
+        name: flaresolverr-net
+        driver: bridge

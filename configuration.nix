@@ -18,6 +18,7 @@ in
     ./services/obsidian-web/obsidian-web.nix
     ./services/copyparty/copyparty.nix
     ./services/reading-stack/reading-stack.nix
+    ./services/flaresolverr/flaresolverr.nix
   ];
 
   networking.hostName = "astrolabe";

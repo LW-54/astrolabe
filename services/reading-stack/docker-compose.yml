@@ -26,6 +26,11 @@ services:
             - /opt/docker-data/reading-stack/media/manga:/home/suwayomi/.local/share/Tachidesk/downloads
         environment:
             - TZ=Etc/UTC
+            - FLARESOLVERR_ENABLED=true
+            - FLARESOLVERR_URL=http://flaresolverr:8191
+        networks:
+            - default
+            - flaresolverr-net
 
     komf:
         image: sndxr/komf:latest
@@ -44,3 +49,7 @@ services:
             - KOMF_KAVITA_METADATA_UPDATE_MODES=API
         depends_on:
             - kavita
+
+networks:
+    flaresolverr-net:
+        external: true
