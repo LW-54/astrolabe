@@ -38,8 +38,12 @@
           default:
             aggregate: true
             seriesThumbnails: true
+            seriesCovers: true
             bookThumbnails: true
-            updateMode: API
+            bookCovers: true
+            lockCovers: true
+            updateModes:
+              - API
             postProcessing:
               seriesTitle: true
               orderBooks: true
