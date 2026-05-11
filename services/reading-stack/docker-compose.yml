@@ -52,11 +52,6 @@ services:
             - KOMF_KAVITA_API_KEY_FILE=/run/secrets/kavita_api_key
             - KOMF_KAVITA_EVENT_LISTENER_ENABLED=true
             - KOMF_KAVITA_METADATA_UPDATE_MODES=API
-            # Enable Metadata Providers
-            - KOMF_METADATA_PROVIDERS_DEFAULT_PROVIDERS_MANGA_UPDATES_ENABLED=true
-            - KOMF_METADATA_PROVIDERS_DEFAULT_PROVIDERS_ANI_LIST_ENABLED=true
-            - KOMF_METADATA_PROVIDERS_DEFAULT_PROVIDERS_MAL_ENABLED=true
-            - KOMF_METADATA_PROVIDERS_DEFAULT_PROVIDERS_NAUTILJON_ENABLED=true
         depends_on:
             - kavita
 

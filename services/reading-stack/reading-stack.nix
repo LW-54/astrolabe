@@ -11,7 +11,7 @@
     "Z /opt/docker-data/reading-stack/suwayomi - 1000 1000 -"
 
     "d /opt/docker-data/reading-stack/komf 0755 1000 1000 -"
-    "f /opt/docker-data/reading-stack/komf/application.yml 0644 1000 1000 - {}"
+    "f /opt/docker-data/reading-stack/komf/application.yml 0644 1000 1000 - metadataProviders:\n  defaultProviders:\n    mangaUpdates:\n      enabled: true\n    aniList:\n      enabled: true\n    mal:\n      enabled: true\n    nautiljon:\n      enabled: true\n"
     "Z /opt/docker-data/reading-stack/komf - 1000 1000 -"
 
     # Shared media folder and subdirectories
