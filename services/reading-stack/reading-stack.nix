@@ -23,6 +23,7 @@
 
   # Securely generate the Komf config with the secret key injected
   sops.templates."komf-application.yml" = {
+    path = "/run/secrets/komf-application.yml";
     owner = "lw";
     content = ''
       kavita:
