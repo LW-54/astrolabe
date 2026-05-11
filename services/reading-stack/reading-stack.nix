@@ -38,7 +38,7 @@
           aniList:
             enabled: true
           mal:
-            enabled: true
+            enabled: false
           nautiljon:
             enabled: true
     '';
