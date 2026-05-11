@@ -34,16 +34,15 @@
         apiKey: "${config.sops.placeholder."reading-stack/kavita_api_key"}"
         eventListener:
           enabled: true
-        metadata-update:
+        metadataUpdate:
           default:
             aggregate: true
+            seriesMetadata: true
             seriesThumbnails: true
-            seriesCovers: true
             bookThumbnails: true
-            bookCovers: true
-            lockCovers: true
-            updateModes:
-              - API
+            lockMetadata: false
+            lockCovers: false
+            updateModes: [ API ]
             postProcessing:
               seriesTitle: true
               orderBooks: true
