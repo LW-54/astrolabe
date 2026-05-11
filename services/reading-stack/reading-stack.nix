@@ -21,12 +21,45 @@
     "Z /opt/docker-data/reading-stack/media - root root -"
   ];
 
-  # 1. Simple Secret Env File (This is parser-proof)
-  sops.templates."komf_env" = {
-    path = "/run/komf_env";
+  # 1. Definitive Komf YAML Template (Strictly following official example)
+  sops.templates."komf_application.yml" = {
+    path = "/run/komf_config/application.yml";
     owner = "lw";
     content = ''
-      KOMF_KAVITA_API_KEY=${config.sops.placeholder."reading-stack/kavita_api_key"}
+      kavita:
+        baseUri: "http://kavita:5000"
+        apiKey: "${config.sops.placeholder."reading-stack/kavita_api_key"}"
+        eventListener:
+          enabled: true
+        metadataUpdate:
+          default:
+            libraryType: "MANGA"
+            updateModes: [ API ]
+            aggregate: true
+            bookCovers: true
+            seriesCovers: true
+            overrideExistingCovers: true
+            lockCovers: true
+            postProcessing:
+              seriesTitle: true
+              orderBooks: true
+
+      database:
+        file: /config/database.sqlite
+
+      metadataProviders:
+        defaultProviders:
+          mangaUpdates:
+            priority: 10
+            enabled: true
+          aniList:
+            priority: 20
+            enabled: true
+
+      server:
+        port: 8085
+
+      logLevel: DEBUG
     '';
   };
 

@@ -45,29 +45,10 @@ services:
             - "8086:8085"
         volumes:
             - /opt/docker-data/reading-stack/komf:/config
-        env_file:
-            - /run/komf_env
+            # Total Reset: Mount the entire config directory from Nix
+            - /run/komf_config/:/config/:ro
         environment:
             - TZ=Etc/UTC
-            - KOMF_LOG_LEVEL=DEBUG
-
-            # Kavita Connection
-            - KOMF_KAVITA_BASE_URI=http://kavita:5000
-            - KOMF_KAVITA_EVENT_LISTENER_ENABLED=true
-
-            # Metadata Rules (Using EXACT names from source code)
-            - KOMF_KAVITA_METADATA_UPDATE_DEFAULT_AGGREGATE=true
-            - KOMF_KAVITA_METADATA_UPDATE_DEFAULT_UPDATE_MODES=API
-            - KOMF_KAVITA_METADATA_UPDATE_DEFAULT_SERIES_COVERS=true
-            - KOMF_KAVITA_METADATA_UPDATE_DEFAULT_BOOK_COVERS=true
-            - KOMF_KAVITA_METADATA_UPDATE_DEFAULT_LOCK_COVERS=true
-            - KOMF_KAVITA_METADATA_UPDATE_DEFAULT_OVERRIDE_EXISTING_COVERS=true
-
-            # Providers
-            - KOMF_METADATA_PROVIDERS_DEFAULT_PROVIDERS_MANGA_UPDATES_ENABLED=true
-            - KOMF_METADATA_PROVIDERS_DEFAULT_PROVIDERS_MANGA_UPDATES_PRIORITY=1
-            - KOMF_METADATA_PROVIDERS_DEFAULT_PROVIDERS_ANI_LIST_ENABLED=true
-            - KOMF_METADATA_PROVIDERS_DEFAULT_PROVIDERS_ANI_LIST_PRIORITY=2
         depends_on:
             - kavita
 
