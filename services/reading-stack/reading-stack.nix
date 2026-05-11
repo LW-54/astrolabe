@@ -39,9 +39,13 @@
             aggregate: true
             seriesMetadata: true
             seriesThumbnails: true
+            seriesCovers: true
             bookThumbnails: true
-            lockMetadata: false
-            lockCovers: false
+            bookCovers: true
+            overrideExistingCovers: true
+            lockCovers: true
+            lockMetadata: true
+            updateMode: API
             updateModes: [ API ]
             postProcessing:
               seriesTitle: true
