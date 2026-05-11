@@ -24,4 +24,9 @@
     "suwayomi.${domain}" = { extraConfig = "reverse_proxy 127.0.0.1:8085"; };
     "komf.${domain}" = { extraConfig = "reverse_proxy 127.0.0.1:8086"; };
   };
+
+  # Exclude media from backups
+  services.restic.backups.s3-main.exclude = [
+    "/opt/docker-data/reading-stack/media"
+  ];
 }
