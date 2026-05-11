@@ -61,8 +61,6 @@
         level:
           root: INFO
           snd.komf: DEBUG
-
-            priority: 3
     '';
   };
 
