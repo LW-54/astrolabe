@@ -34,12 +34,12 @@
         apiKey: "${config.sops.placeholder."reading-stack/kavita_api_key"}"
         eventListener:
           enabled: true
-        metadataUpdate:
+        metadata-update:
           default:
             aggregate: true
-            bookCovers: true
-            seriesCovers: true
-            updateModes: [ API ]
+            seriesThumbnails: true
+            bookThumbnails: true
+            updateMode: API
             postProcessing:
               seriesTitle: true
               orderBooks: true
@@ -48,14 +48,14 @@
       metadataProviders:
         defaultProviders:
           mangaUpdates:
-            priority: 10
             enabled: true
+            priority: 1
           aniList:
-            priority: 20
             enabled: true
+            priority: 2
           nautiljon:
-            priority: 30
             enabled: true
+            priority: 3
     '';
   };
 
