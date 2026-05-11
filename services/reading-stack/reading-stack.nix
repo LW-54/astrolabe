@@ -11,6 +11,7 @@
     "Z /opt/docker-data/reading-stack/suwayomi - 1000 1000 -"
 
     "d /opt/docker-data/reading-stack/komf 0755 1000 1000 -"
+    "f /opt/docker-data/reading-stack/komf/application.yml 0644 1000 1000 - {}"
     "Z /opt/docker-data/reading-stack/komf - 1000 1000 -"
 
     # Shared media folder and subdirectories
