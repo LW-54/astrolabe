@@ -36,23 +36,24 @@ services:
         networks:
             - default
             - flaresolverr-net
-komf:
-    image: sndxr/komf:latest
-    container_name: komf
-    restart: unless-stopped
-    ports:
-        - "8086:8085"
-    volumes:
-        - /opt/docker-data/reading-stack/komf:/config
-        # Mount the static YAML from Nix /etc/
-        - /etc/komf/application.yml:/config/application.yml:ro
-    env_file:
-        # Mount the secret environment variables from Nix /run/
-        - /run/komf_env
-    environment:
-        - TZ=Etc/UTC
-    depends_on:
-        - kavita
+
+    komf:
+        image: sndxr/komf:latest
+        container_name: komf
+        restart: unless-stopped
+        ports:
+            - "8086:8085"
+        volumes:
+            - /opt/docker-data/reading-stack/komf:/config
+            # Mount the static YAML from Nix /etc/
+            - /etc/komf/application.yml:/config/application.yml:ro
+        env_file:
+            # Mount the secret environment variables from Nix /run/
+            - /run/komf_env
+        environment:
+            - TZ=Etc/UTC
+        depends_on:
+            - kavita
 
 networks:
     flaresolverr-net:
