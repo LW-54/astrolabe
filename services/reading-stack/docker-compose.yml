@@ -45,8 +45,11 @@ services:
             - "8086:8085"
         volumes:
             - /opt/docker-data/reading-stack/komf:/config
-            # Total Reset: Mount the entire config directory from Nix
-            - /run/komf_config/:/config/:ro
+            # Direct file mount from /etc/ to avoid Docker's directory-creation bug
+            - /etc/komf-config.yml:/config/application.yml:ro
+        env_file:
+            # Mount the secret environment variables from Nix /run/
+            - /run/secrets/rendered/komf_env
         environment:
             - TZ=Etc/UTC
         depends_on:

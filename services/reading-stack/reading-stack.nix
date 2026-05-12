@@ -21,32 +21,21 @@
     "Z /opt/docker-data/reading-stack/media - root root -"
   ];
 
-  # 1. Definitive Komf YAML Template (Strictly following official example)
-  sops.templates."komf_application.yml" = {
-    path = "/run/komf_config/application.yml";
-    owner = "lw";
-    content = ''
+  # 1. Static, perfectly formatted YAML Configuration (No secrets here)
+  environment.etc."komf-config.yml" = {
+    mode = "0644";
+    text = ''
       kavita:
         baseUri: "http://kavita:5000"
-        apiKey: "${config.sops.placeholder."reading-stack/kavita_api_key"}"
         eventListener:
           enabled: true
         metadataUpdate:
           default:
-            libraryType: "MANGA"
-            updateModes: [ API ]
             aggregate: true
             bookCovers: true
             seriesCovers: true
             overrideExistingCovers: true
-            lockCovers: true
-            postProcessing:
-              seriesTitle: true
-              orderBooks: true
-
-      database:
-        file: /config/database.sqlite
-
+            updateModes: [ API ]
       metadataProviders:
         defaultProviders:
           mangaUpdates:
@@ -55,11 +44,19 @@
           aniList:
             priority: 20
             enabled: true
-
+      database:
+        file: /config/database.sqlite
       server:
         port: 8085
-
       logLevel: DEBUG
+    '';
+  };
+
+  # 2. Secure Environment Variable for the API Key (Injected via env_file)
+  sops.templates."komf_env" = {
+    owner = "lw";
+    content = ''
+      KOMF_KAVITA_API_KEY=${config.sops.placeholder."reading-stack/kavita_api_key"}
     '';
   };
 
