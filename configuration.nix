@@ -19,6 +19,7 @@ in
     ./services/copyparty/copyparty.nix
     ./services/reading-stack/reading-stack.nix
     ./services/flaresolverr/flaresolverr.nix
+    ./services/kamiyomu/kamiyomu.nix
   ];
 
   networking.hostName = "astrolabe";
