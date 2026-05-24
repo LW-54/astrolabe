@@ -35,51 +35,10 @@
     ];
   };
 
-  # 1. Static, perfectly formatted YAML Configuration (No secrets here)
-  environment.etc."komf-config.yml" = {
-    mode = "0644";
-    text = ''
-      kavita:
-        baseUri: "http://kavita:5000"
-        eventListener:
-          enabled: true
-        metadataUpdate:
-          default:
-            aggregate: true
-            bookCovers: true
-            seriesCovers: true
-            overrideExistingCovers: true
-            updateModes: [ API ]
-      metadataProviders:
-        defaultProviders:
-          mangaUpdates:
-            priority: 10
-            enabled: true
-          aniList:
-            priority: 20
-            enabled: true
-      database:
-        file: /config/database.sqlite
-      server:
-        port: 8085
-      logLevel: DEBUG
-    '';
-  };
-
-  # 2. Secure Environment Variable for the API Key (Injected via env_file)
-  sops.templates."komf_env" = {
-    owner = "lw";
-    content = ''
-      KOMF_KAVITA_API_KEY=${config.sops.placeholder."reading-stack/kavita_api_key"}
-    '';
-  };
-
   # Caddy Reverse Proxy
-
   services.caddy.virtualHosts = {
     "kavita.${domain}" = { extraConfig = "reverse_proxy 127.0.0.1:5002"; };
     "suwayomi.${domain}" = { extraConfig = "reverse_proxy 127.0.0.1:8085"; };
-    "komf.${domain}" = { extraConfig = "reverse_proxy 127.0.0.1:8086"; };
   };
 
   # Exclude media from backups
