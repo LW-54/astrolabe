@@ -1,0 +1,21 @@
+services:
+  suwayomi:
+    image: ghcr.io/suwayomi/tachidesk:latest
+    container_name: suwayomi
+    restart: unless-stopped
+    ports:
+      - "8085:4567"
+    volumes:
+      # Single root volume for everything
+      - /opt/docker-data/suwayomi:/home/suwayomi/.local/share/Tachidesk
+    environment:
+      - TZ=Etc/UTC
+      - FLARESOLVERR_ENABLED=true
+      - FLARESOLVERR_URL=http://flaresolverr:8191
+    networks:
+      - default
+      - flaresolverr-net
+
+networks:
+  flaresolverr-net:
+    external: true

@@ -17,11 +17,10 @@ in
     ./services/obsidian-livesync/obsidian-livesync.nix
     ./services/obsidian-web/obsidian-web.nix
     ./services/copyparty/copyparty.nix
-    ./services/reading-stack/reading-stack.nix
+    ./services/suwayomi/suwayomi.nix
     ./services/flaresolverr/flaresolverr.nix
+    ./services/kamiyomu/kamiyomu.nix
   ];
-
-  programs.fuse.userAllowOther = true;
 
   networking.hostName = "astrolabe";
   system.stateVersion = "25.11";
