@@ -22,9 +22,10 @@
   ];
 
   # MergerFS: Flatten Suwayomi source-based folders into a single virtual root
+  # It takes everything inside media/manga/mangas/* and merges them into manga_flat
   fileSystems."/opt/docker-data/reading-stack/media/manga_flat" = {
     fsType = "fuse.mergerfs";
-    device = "/opt/docker-data/reading-stack/media/manga/*";
+    device = "/opt/docker-data/reading-stack/media/manga/mangas/*";
     options = [
       "cache.files=partial"
       "dropcacheonclose=true"

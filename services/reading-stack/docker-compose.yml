@@ -22,16 +22,12 @@ services:
             - "8085:4567"
         volumes:
             - /opt/docker-data/reading-stack/suwayomi:/home/suwayomi/.local/share/Tachidesk
-            # Map the internal downloads/mangas folder to the external media/manga folder
-            # This isolates system files (thumbnails) from actual manga.
-            - /opt/docker-data/reading-stack/media/manga:/home/suwayomi/.local/share/Tachidesk/downloads/mangas
+            # Map the root downloads directory to the host
+            - /opt/docker-data/reading-stack/media/manga:/home/suwayomi/.local/share/Tachidesk/downloads
         environment:
             - TZ=Etc/UTC
             - FLARESOLVERR_ENABLED=true
             - FLARESOLVERR_URL=http://flaresolverr:8191
-            # "Gold Standard" organization: removes the Source folder layer
-            # so Kavita sees individual Manga titles as Series.
-            - TACHIDESK_SERVER_DOWNLOADPATHTEMPLATE={manga_title}/{chapter_title}
             - TACHIDESK_SERVER_DOWNLOADASCBZ=true
         networks:
             - default
