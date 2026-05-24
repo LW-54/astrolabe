@@ -19,7 +19,6 @@ in
     ./services/copyparty/copyparty.nix
     ./services/suwayomi/suwayomi.nix
     ./services/flaresolverr/flaresolverr.nix
-    ./services/kamiyomu/kamiyomu.nix
   ];
 
   networking.hostName = "astrolabe";
@@ -129,7 +128,6 @@ systemd.services.clone-astrolabe-repo = {
     git
     nano
     ttyd
-    mergerfs
   ];
 
   sops.secrets."github_ssh_key" = {
