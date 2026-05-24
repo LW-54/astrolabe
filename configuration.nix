@@ -19,8 +19,9 @@ in
     ./services/copyparty/copyparty.nix
     ./services/reading-stack/reading-stack.nix
     ./services/flaresolverr/flaresolverr.nix
-    ./services/kamiyomu/kamiyomu.nix
   ];
+
+  programs.fuse.userAllowOther = true;
 
   networking.hostName = "astrolabe";
   system.stateVersion = "25.11";
@@ -129,6 +130,7 @@ systemd.services.clone-astrolabe-repo = {
     git
     nano
     ttyd
+    mergerfs
   ];
 
   sops.secrets."github_ssh_key" = {

@@ -21,6 +21,20 @@
     "Z /opt/docker-data/reading-stack/media - root root -"
   ];
 
+  # MergerFS: Flatten Suwayomi source-based folders into a single virtual root
+  fileSystems."/opt/docker-data/reading-stack/media/manga_flat" = {
+    fsType = "fuse.mergerfs";
+    device = "/opt/docker-data/reading-stack/media/manga/*";
+    options = [
+      "cache.files=partial"
+      "dropcacheonclose=true"
+      "category.create=ff"
+      "allow_other"
+      "use_ino"
+      "fsname=manga_flat"
+    ];
+  };
+
   # 1. Static, perfectly formatted YAML Configuration (No secrets here)
   environment.etc."komf-config.yml" = {
     mode = "0644";

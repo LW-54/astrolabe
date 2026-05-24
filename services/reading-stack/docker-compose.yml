@@ -7,8 +7,8 @@ services:
             - "5002:5000"
         volumes:
             - /opt/docker-data/reading-stack/kavita:/kavita/config
-            # Map the specific subdirectories
-            - /opt/docker-data/reading-stack/media/manga:/manga
+            # Map the MergerFS flattened view to Kavita's manga library
+            - /opt/docker-data/reading-stack/media/manga_flat:/manga
             - /opt/docker-data/reading-stack/media/comics:/comics
             - /opt/docker-data/reading-stack/media/books:/books
         environment:
