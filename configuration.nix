@@ -129,6 +129,10 @@ systemd.services.clone-astrolabe-repo = {
     nano
     ttyd
   ];
+  
+  systemd.user.tmpfiles.rules = [
+    "L+ %h/.zed_server/zed-remote-server-linux-x86_64 - - - - ${pkgs.zed-editor.remote_server}/bin/zed-remote-server-linux-x86_64"
+  ];
 
   sops.secrets."github_ssh_key" = {
       owner = "lw";
