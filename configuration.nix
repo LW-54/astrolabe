@@ -130,7 +130,38 @@ systemd.services.clone-astrolabe-repo = {
     ttyd
   ];
   
-  programs.nix-ld.enable = true;
+
+
+
+
+
+
+
+
+  # 1. Pull in the Home Manager module automatically (no installation required)
+  imports = [
+    "${builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz"}/nixos"
+  ];
+
+  # 2. Define just the Zed configuration for your specific user
+  home-manager.users.lw = {
+    programs.zed-editor = {
+      enable = true;
+      installRemoteServer = true;
+    };
+    
+    # Home manager requires this, you can usually just match your NixOS state version
+    home.stateVersion = system;stateVersion; 
+  };  
+
+
+
+
+
+
+
+
+
 
   sops.secrets."github_ssh_key" = {
       owner = "lw";
