@@ -127,10 +127,11 @@ systemd.services.clone-astrolabe-repo = {
     docker-compose
     git
     nano
-    zed-editor
     ttyd
   ];
   
+  programs.nix-ld.enable = true;
+
   sops.secrets."github_ssh_key" = {
       owner = "lw";
       path = "/home/lw/.ssh/id_ed25519";
