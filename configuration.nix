@@ -127,7 +127,6 @@ systemd.services.clone-astrolabe-repo = {
     docker-compose
     git
     nano
-    zed-editor
     ttyd
   ];
   
@@ -138,18 +137,11 @@ systemd.services.clone-astrolabe-repo = {
 
 
   systemd.tmpfiles.rules = let
-    zedVer = pkgs.zed-editor.version;
     zedBin = "${pkgs.zed-editor.remote_server}/bin/zed-remote-server-linux-x86_64";
   in [
-    # Ensure the directory exists with correct permissions for your user
-    "d /home/lw/.zed_server 0755 lw users - -"
-    
-    # Create the exact versioned symlinks Zed looks for, pointing to the Nix store
-    "L+ /home/lw/.zed_server/zed-remote-server-stable-${zedVer} - - - - ${zedBin}"
-    "L+ /home/lw/.zed_server/zed-remote-server-preview-${zedVer} - - - - ${zedBin}"
+    "d /home/lw/.local/share/zed/server/lib 0755 lw users - -"
+    "L+ /home/lw/.local/share/zed/server/lib/zed-remote-server-linux-x86_64 - - - - ${zedBin}"
   ];
-
-
 
 
 
