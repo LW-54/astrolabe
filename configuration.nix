@@ -131,6 +131,8 @@ systemd.services.clone-astrolabe-repo = {
   ];
   
 
+  programs.nix-ld.enable = true;
+
   sops.secrets."github_ssh_key" = {
       owner = "lw";
       path = "/home/lw/.ssh/id_ed25519";
