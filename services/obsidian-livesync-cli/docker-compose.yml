@@ -1,4 +1,3 @@
-version: "3.9"
 services:
   livesync-cli:
     build:
@@ -10,4 +9,9 @@ services:
     volumes:
       - /home/lw/obsidian/Memex:/vault:rw
       - /opt/docker-data/obsidian-livesync-cli/data:/data:rw
-    command: daemon /data --settings /data/settings.json --vault /vault
+    command:
+      - daemon
+      - --settings
+      - /data/settings.json
+      - --vault
+      - /vault
