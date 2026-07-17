@@ -16,6 +16,7 @@ in
     ./services/seerr/seerr.nix
     ./services/obsidian-livesync/obsidian-livesync.nix
     ./services/obsidian-livesync-cli/obsidian-livesync-cli.nix
+    ./services/syncthing/syncthing.nix
     ./services/copyparty/copyparty.nix
     ./services/suwayomi/suwayomi.nix
     ./services/flaresolverr/flaresolverr.nix

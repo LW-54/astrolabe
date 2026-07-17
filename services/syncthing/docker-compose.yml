@@ -1,0 +1,17 @@
+services:
+  syncthing:
+    image: lscr.io/linuxserver/syncthing:latest
+    container_name: syncthing
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=100
+      - TZ=Etc/UTC
+    ports:
+      - "8384:8384"
+      - "22000:22000"
+      - "22000:22000/udp"
+      - "21027:21027/udp"
+    volumes:
+      - /opt/docker-data/syncthing/config:/config
+      - /home/lw/obsidian:/sync:rw
