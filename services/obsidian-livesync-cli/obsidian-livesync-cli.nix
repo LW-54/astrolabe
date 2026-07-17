@@ -31,11 +31,11 @@ in
       mkdir -p "${cliData}"
 
       if [ ! -f "${cliSettings}" ]; then
-        cat > "${cliSettings}" <<EOF
-{
-  "couchDB_URI": "http://localhost:5984",
-  "couchDB_USER": "${COUCHDB_USER}",
-  "couchDB_PASSWORD": "${COUCHDB_PASSWORD}",
+          cat > "${cliSettings}" <<EOF
+      {
+        "couchDB_URI": "http://localhost:5984",
+        "couchDB_USER": "\${COUCHDB_USER}",
+        "couchDB_PASSWORD": "\${COUCHDB_PASSWORD}",
   "couchDB_DBNAME": "obsidian-livesync",
   "liveSync": true,
   "syncOnSave": true,
